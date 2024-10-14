@@ -1,0 +1,92 @@
+{
+  "version": "0.1.0",
+  "name": "hello_anchor",
+  "instructions": [
+    { "name": "initialize", "accounts": [], "args": [] },
+    {
+      "name": "mintProposal",
+      "accounts": [
+        { "name": "proposalAccount", "isMut": true, "isSigner": false },
+        { "name": "proposal", "isMut": true, "isSigner": false },
+        { "name": "options", "isMut": true, "isSigner": false },
+        { "name": "payer", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [{ "name": "details", "type": { "defined": "ProposalParams" } }]
+    },
+    {
+      "name": "vote",
+      "accounts": [
+        { "name": "proposalAccount", "isMut": false, "isSigner": false },
+        { "name": "options", "isMut": true, "isSigner": false },
+        { "name": "payer", "isMut": true, "isSigner": true },
+        { "name": "from", "isMut": true, "isSigner": false },
+        { "name": "mint", "isMut": false, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [{ "name": "optionNumber", "type": { "defined": "usize" } }]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ProposalParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "description", "type": "string" },
+          { "name": "uri", "type": "string" },
+          { "name": "options", "type": { "vec": "string" } },
+          { "name": "startTime", "type": "i64" },
+          { "name": "endTime", "type": "i64" }
+        ]
+      }
+    },
+    {
+      "name": "ProposalAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "proposalDetails", "type": "publicKey" },
+          { "name": "optionsList", "type": "publicKey" },
+          { "name": "startTime", "type": "i64" },
+          { "name": "endTime", "type": "i64" }
+        ]
+      }
+    },
+    {
+      "name": "ProposalDetails",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "maker", "type": "publicKey" },
+          { "name": "description", "type": "string" },
+          { "name": "uri", "type": "string" }
+        ]
+      }
+    },
+    {
+      "name": "OptionsList",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "optionNumber", "type": { "defined": "usize" } },
+          { "name": "optionList", "type": { "vec": "string" } },
+          { "name": "voteList", "type": { "vec": "u64" } }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    { "code": 6000, "name": "InvalidOption", "msg": "No such option exists" },
+    {
+      "code": 6001,
+      "name": "NotStarted",
+      "msg": "Proposal voting not started"
+    },
+    { "code": 6002, "name": "HasEnded", "msg": "Proposal voting has ended" }
+  ],
+  "metadata": {
+    "address": "JCFEJ6TyVK2rrUWQGvCvxvAFeiHh985H1DYmGPevpaRz"
+  }
+}

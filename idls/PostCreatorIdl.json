@@ -1,0 +1,72 @@
+{
+  "version": "0.1.0",
+  "name": "post_creator",
+  "instructions": [
+    {
+      "name": "createPost",
+      "accounts": [
+        { "name": "userPost", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "description", "type": "string" },
+        { "name": "url", "type": "string" },
+        { "name": "postId", "type": "u8" }
+      ]
+    },
+    {
+      "name": "likePost",
+      "accounts": [
+        { "name": "userPost", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "from", "isMut": true, "isSigner": false },
+        { "name": "mint", "isMut": true, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "commentPost",
+      "accounts": [
+        { "name": "userPost", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [{ "name": "content", "type": "string" }]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "UserPost",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "description", "type": "string" },
+          { "name": "url", "type": "string" },
+          { "name": "authority", "type": "publicKey" },
+          { "name": "postId", "type": "u8" },
+          { "name": "likeCount", "type": "u32" },
+          { "name": "comments", "type": { "vec": { "defined": "Comment" } } }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Comment",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "author", "type": "publicKey" },
+          { "name": "content", "type": "string" },
+          { "name": "timestamp", "type": "i64" }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "address": "54F3gHcnTXPGxgqAMqK6BEfgxYXBCPR4v8xGSxxeUgmf"
+  }
+}
